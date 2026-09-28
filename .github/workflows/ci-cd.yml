@@ -1,0 +1,43 @@
+name: CI-CD DevOps
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  test:
+    name: Pruebas de la aplicación
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Verificar archivo HTML
+        run: |
+          test -f index.html
+
+      - name: Verificar contenido
+        run: |
+          grep "Aplicación DevOps" index.html
+
+  build:
+    name: Construir imagen Docker
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Construir imagen
+        run: |
+          docker build -t practica-devops .

@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: practica-devops
+    ports:
+      - "8080:80"
+    restart: unless-stopped
